@@ -11,8 +11,10 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
+    public static Connection connection = null;
+
     public static Connection getConnection() {
-        Connection connection = null;
+
         try {
             Class.forName(DB_DRIVER);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -20,7 +22,12 @@ public class Util {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             System.out.println("Connection has been failed!");
-        } finally {
+        }
+        return connection;
+    }
+
+    public static Connection closeConnection() {
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
@@ -29,5 +36,6 @@ public class Util {
         }
         return connection;
     }
+
 
 }
